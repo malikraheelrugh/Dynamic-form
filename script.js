@@ -35,6 +35,14 @@ userData.forEach((item) => {
   input.setAttribute("placeholder", `Enter ${item.label}`);
   maindiv.append(label);
   maindiv.append(input);
+
+  if (item.isRequired) {
+    let error = document.createElement("small");
+    error.innerHTML = `please fill in the ${item.label}`;
+    error.style.color = "red";
+    error.style.visibility = "hidden";
+    maindiv.appendChild(error);
+  }
 });
 //create checkbox div
 let checkboxDiv = document.createElement("div");
@@ -70,6 +78,14 @@ function submitCall() {
     let inputValue = document.getElementById(item.label);
     let finalVal = inputValue.value;
     user[item.label] = finalVal;
+    console.log(item.isRequired, item.label);
+    if (item.isRequired && finalVal == "") {
+      console.log("i am empty");
+      let small = document.querySelectorAll("small");
+      small.forEach((item) => {
+        item.style.visibility = "visible";
+      });
+    }
   });
   if (currentIndex != null) {
     users[currentIndex] = user;
