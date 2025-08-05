@@ -1,0 +1,124 @@
+userData = [
+  { label: "name", type: "text", isRequired: true },
+  { label: "user", type: "text", isRequired: false },
+  { label: "phone", type: "number", isRequired: false },
+  { label: "email", type: "email", isRequired: true },
+  { label: "password", type: "password", isRequired: true },
+];
+//make form and append to body
+let form = document.createElement("form");
+form.setAttribute("action", "/");
+document.body.append(form);
+//heading
+let h1 = document.createElement("h1");
+h1.innerHTML = "Dynamic form";
+form.appendChild(h1);
+userData.forEach((item) => {
+  //create main div
+  let maindiv = document.createElement("div");
+  maindiv.setAttribute("class", "main-div");
+  form.append(maindiv);
+
+  //create label and input
+  let label = document.createElement("label");
+  label.textContent = item.label;
+  // Add star only if isRequired is true
+  if (item.isRequired) {
+    const star = document.createElement("span");
+    star.setAttribute("class", "star");
+    star.textContent = " *";
+    label.appendChild(star);
+  }
+  let input = document.createElement("input");
+  input.setAttribute("type", item.type);
+  input.setAttribute("id", item.label);
+  input.setAttribute("placeholder", `Enter ${item.label}`);
+  maindiv.append(label);
+  maindiv.append(input);
+});
+//create checkbox div
+let checkboxDiv = document.createElement("div");
+checkboxDiv.style.marginTop = "1.5rem";
+form.append(checkboxDiv);
+//create submit btn
+let submitBtn = document.createElement("button");
+submitBtn.innerHTML = "Submit";
+submitBtn.setAttribute("id", "btn");
+submitBtn.setAttribute("type", "button");
+form.append(submitBtn);
+//show output on the document
+const output1 = document.createElement("div");
+output1.setAttribute("id", "output");
+document.body.append(output1);
+
+//access all items by ids
+const showOutput = document.querySelector("#output");
+const Dform = document.querySelector("form");
+const span = document.querySelector("span");
+const cBox = document.querySelector("#checkbox");
+const star = document.querySelectorAll(".star");
+const btn = document.querySelector("#btn");
+console.log(star);
+
+//take output from input fields
+btn.addEventListener("click", () => {
+  submitCall();
+});
+let users = [];
+let currentIndex = null;
+function submitCall() {
+  let user = {};
+
+  userData.forEach((item) => {
+    let inputValue = document.getElementById(item.label);
+    let finalVal = inputValue.value;
+    user[item.label] = finalVal;
+  });
+  if (currentIndex != null) {
+    users[currentIndex] = user;
+    updateUi();
+    currentIndex = null;
+  } else {
+    users.push(user);
+  }
+  updateUi();
+  console.log(users);
+
+  Dform.reset();
+}
+function updateUi() {
+  let output = "";
+
+  output += `<table border="4" style="width:100%;">`;
+  output += `<thead><th>name</th><th>number</th><th>email</th><th>password</th><th>Action</th></thead><tbody>`;
+
+  users.forEach((item, index) => {
+    console.log(item.label);
+
+    output += `
+      <tr ><td>${item.name} </td>
+      <td> ${item.phone}</td><td> ${item.email}</td>
+      <td>${item.password}</td>
+      <td> <button onclick="editMe(${index})">edit</button>
+      <button onclick="deleteMe(${index})">delete</button> </td>
+      </tr>
+    `;
+  });
+  output += `</tbody></table>`;
+  btn.innerHTML = "submit";
+
+  showOutput.innerHTML = output;
+}
+function deleteMe(index) {
+  console.log(index);
+  users.splice(index, 1);
+  updateUi();
+}
+function editMe(index) {
+  btn.innerHTML = "update";
+  console.log(index);
+  userData.forEach((item) => {
+    document.getElementById(item.label).value = users[index][item.label];
+  });
+  currentIndex = index;
+}
