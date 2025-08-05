@@ -56,9 +56,7 @@ const showOutput = document.querySelector("#output");
 const Dform = document.querySelector("form");
 const span = document.querySelector("span");
 const cBox = document.querySelector("#checkbox");
-const star = document.querySelectorAll(".star");
 const btn = document.querySelector("#btn");
-console.log(star);
 
 //take output from input fields
 btn.addEventListener("click", () => {
@@ -88,32 +86,32 @@ function submitCall() {
 }
 function updateUi() {
   let output = "";
-
   output += `<table border="4" style="width:100%;">`;
-  output += `<thead><th>name</th><th>number</th><th>email</th><th>password</th><th>Action</th></thead><tbody>`;
-
-  users.forEach((item, index) => {
-    console.log(item.label);
-
-    output += `
-      <tr ><td>${item.name} </td>
-      <td> ${item.phone}</td><td> ${item.email}</td>
-      <td>${item.password}</td>
-      <td> <button onclick="editMe(${index})">edit</button>
-      <button onclick="deleteMe(${index})">delete</button> </td>
-      </tr>
-    `;
+  userData.forEach((data) => {
+    output += `<th style="color:rgb(163, 246, 174)">${data.label}</th>`;
   });
-  output += `</tbody></table>`;
+  output += `<th >Action</th><tbody>`;
+  users.forEach((user, index) => {
+    // output += `<div>`;
+    output += `<tr>`;
+    userData.forEach((data) => {
+      output += `<td> ${user[data.label]}</td>`;
+    });
+    output += `<td><button onclick="editMe(${index})">edit</button>`;
+    output += `<button onclick="deleteMe(${index})">delete</button></td>`;
+  });
+  output += `</tr><br></tbody></table>`;
   btn.innerHTML = "submit";
 
   showOutput.innerHTML = output;
 }
+
 function deleteMe(index) {
   console.log(index);
   users.splice(index, 1);
   updateUi();
 }
+
 function editMe(index) {
   btn.innerHTML = "update";
   console.log(index);
