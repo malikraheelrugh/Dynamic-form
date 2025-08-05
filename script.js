@@ -78,12 +78,14 @@ function submitCall() {
     let inputValue = document.getElementById(item.label);
     let finalVal = inputValue.value;
     user[item.label] = finalVal;
-    console.log(item.isRequired, item.label);
+    let small = document.querySelectorAll("small");
     if (item.isRequired && finalVal == "") {
-      console.log("i am empty");
-      let small = document.querySelectorAll("small");
       small.forEach((item) => {
         item.style.visibility = "visible";
+      });
+    } else {
+      small.forEach((item) => {
+        item.style.visibility = "hidden";
       });
     }
   });
