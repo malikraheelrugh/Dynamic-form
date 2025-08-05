@@ -55,7 +55,6 @@ document.body.append(output1);
 const showOutput = document.querySelector("#output");
 const Dform = document.querySelector("form");
 const span = document.querySelector("span");
-const cBox = document.querySelector("#checkbox");
 const btn = document.querySelector("#btn");
 
 //take output from input fields
