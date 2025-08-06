@@ -78,7 +78,7 @@ function validateForm() {
     let inputValue = document.getElementById(item.label);
     let finalVal = inputValue.value;
 
-    if ((item.isRequired, finalVal != "")) {
+    if (item.isRequired && finalVal != "") {
       if (!item.isRequired && finalVal != "") {
         small.forEach((item) => {
           item.style.visibility = "visible";
