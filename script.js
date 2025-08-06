@@ -67,10 +67,33 @@ const btn = document.querySelector("#btn");
 
 //take output from input fields
 btn.addEventListener("click", () => {
-  submitCall();
+  validateForm();
 });
 let users = [];
 let currentIndex = null;
+function validateForm() {
+  let small = document.querySelectorAll("small");
+
+  userData.forEach((item) => {
+    let inputValue = document.getElementById(item.label);
+    let finalVal = inputValue.value;
+
+    if ((item.isRequired, finalVal != "")) {
+      if (!item.isRequired && finalVal != "") {
+        small.forEach((item) => {
+          item.style.visibility = "visible";
+        });
+        return false;
+      } else {
+        small.forEach((item) => {
+          item.style.visibility = "hidden";
+        });
+      }
+      submitCall();
+    }
+  });
+}
+
 function submitCall() {
   let user = {};
 
@@ -78,16 +101,7 @@ function submitCall() {
     let inputValue = document.getElementById(item.label);
     let finalVal = inputValue.value;
     user[item.label] = finalVal;
-    let small = document.querySelectorAll("small");
-    if (item.isRequired && finalVal == "") {
-      small.forEach((item) => {
-        item.style.visibility = "visible";
-      });
-    } else {
-      small.forEach((item) => {
-        item.style.visibility = "hidden";
-      });
-    }
+    console.log(finalVal);
   });
   if (currentIndex != null) {
     users[currentIndex] = user;
@@ -96,11 +110,12 @@ function submitCall() {
   } else {
     users.push(user);
   }
-  updateUi();
   console.log(users);
+  updateUi();
 
   Dform.reset();
 }
+
 function updateUi() {
   let output = "";
   output += `<table border="4" style="width:100%;">`;
