@@ -35,12 +35,11 @@ userData.forEach((item) => {
   input.setAttribute("placeholder", `Enter ${item.label}`);
   maindiv.append(label);
   maindiv.append(input);
-
   if (item.isRequired) {
     let error = document.createElement("small");
+    error.setAttribute("class", item.label);
     error.innerHTML = `please fill in the ${item.label}`;
     error.style.color = "red";
-    error.style.visibility = "hidden";
     maindiv.appendChild(error);
   }
 });
@@ -62,38 +61,35 @@ document.body.append(output1);
 //access all items by ids
 const showOutput = document.querySelector("#output");
 const Dform = document.querySelector("form");
-const span = document.querySelector("span");
 const btn = document.querySelector("#btn");
+const myName = document.getElementById("name");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const inputs = document.querySelectorAll("input");
+
+myName.addEventListener("input", () => {
+  document.querySelector(".name").style.visibility = "hidden";
+});
+email.addEventListener("input", () => {
+  document.querySelector(".email").style.visibility = "hidden";
+});
+password.addEventListener("input", () => {
+  document.querySelector(".password").style.visibility = "hidden";
+});
 
 //take output from input fields
+
 btn.addEventListener("click", () => {
+  error();
   validateForm();
 });
 let users = [];
 let currentIndex = null;
 function validateForm() {
-  let small = document.querySelectorAll("small");
-
-  userData.forEach((item) => {
-    let inputValue = document.getElementById(item.label);
-    let finalVal = inputValue.value;
-
-    if (item.isRequired && finalVal != "") {
-      if (!item.isRequired && finalVal != "") {
-        small.forEach((item) => {
-          item.style.visibility = "visible";
-        });
-        return false;
-      } else {
-        small.forEach((item) => {
-          item.style.visibility = "hidden";
-        });
-      }
-      submitCall();
-    }
-  });
+  if (myName.value != "" && email.value != "" && password.value != "") {
+    submitCall();
+  }
 }
-
 function submitCall() {
   let user = {};
 
@@ -101,7 +97,6 @@ function submitCall() {
     let inputValue = document.getElementById(item.label);
     let finalVal = inputValue.value;
     user[item.label] = finalVal;
-    console.log(finalVal);
   });
   if (currentIndex != null) {
     users[currentIndex] = user;
@@ -115,7 +110,6 @@ function submitCall() {
 
   Dform.reset();
 }
-
 function updateUi() {
   let output = "";
   output += `<table border="4" style="width:100%;">`;
@@ -151,4 +145,10 @@ function editMe(index) {
     document.getElementById(item.label).value = users[index][item.label];
   });
   currentIndex = index;
+}
+function error() {
+  let small = document.querySelectorAll("small");
+  small.forEach((item) => {
+    item.style.visibility = "visible";
+  });
 }
