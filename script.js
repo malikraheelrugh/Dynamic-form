@@ -182,7 +182,6 @@ function validate() {
   ) {
     alert("form submitted successfully");
     submitCall();
-  } else {
   }
 }
 let users = [];
@@ -247,6 +246,8 @@ function editMe(index) {
 function error() {
   let small = document.querySelectorAll("small");
   small.forEach((item) => {
+    console.log(item);
+
     item.style.visibility = "visible";
   });
 }
@@ -257,7 +258,7 @@ function validatetype() {
     let isValid = item.validationtype;
     let input = document.getElementById(item.label);
 
-    input.addEventListener("change", () => {
+    input.addEventListener("input", () => {
       let value = input.value;
       if (item.type != "radio" && item.type != "checkbox") {
         if (!value.match(isValid)) {
