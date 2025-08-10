@@ -167,10 +167,10 @@ console.log(submitBtn);
 //add event listener to submit button
 btn.addEventListener("click", () => {
   console.log(validationStatus);
-  refreshPage();
+  // refreshPage();
   // required();
   validate();
-  error();
+  // error();
 });
 function validate() {
   if (
@@ -318,7 +318,7 @@ function required() {
 
     if (item.isRequired) {
       // if (input.type != "checkbox" && input.type != "radio") {
-      input.addEventListener("input", (e) => {
+      input.addEventListener("focus", (e) => {
         document.querySelector(`.${item.label}`).style.visibility = "visible";
         document.querySelector(`#span${item.label}`).innerHTML = "";
       });
