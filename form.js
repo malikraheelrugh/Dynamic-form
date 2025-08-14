@@ -3,7 +3,7 @@ userData = [
     label: "name",
     type: "text",
     isRequired: true,
-    validationtype: /^[a-zA-Z]/,
+    validationtype: /^[A-Za-z]+$/,
   },
   {
     label: "user",
