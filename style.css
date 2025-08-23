@@ -91,3 +91,13 @@ input {
 small {
     color: #e60606;
 }
+
+#local-storage {
+    font-size: 18px;
+    background-color: rgb(241, 72, 241);
+    color: aliceblue;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 2rem;
+    border-radius: 10px;
+}
