@@ -3,7 +3,7 @@ userData = [
     label: "name",
     type: "text",
     isRequired: true,
-    validationtype: /^[A-Za-z]+$/,
+    validationtype: /^[a-zA-Z]/,
   },
   {
     label: "user",
@@ -149,11 +149,6 @@ form.append(submitBtn);
 const output1 = document.createElement("div");
 output1.setAttribute("id", "output");
 document.body.append(output1);
-// Show last saved user data on page load
-// const savedUsers = JSON.parse(localStorage.getItem("user")) || [];
-// if (savedUsers.length > 0) {
-//   output1.innerHTML = `<pre>${JSON.stringify(savedUsers, null, 2)}</pre>`;
-// }
 
 //access all items by ids
 const Dform = document.querySelector("form");
@@ -222,18 +217,19 @@ btn.addEventListener("click", () => {
   renderUsers();
 });
 function validate() {
-  // if (
-  //   validationStatus.name != true ||
-  //   validationStatus.user != true ||
-  //   validationStatus.phone != true ||
-  //   validationStatus.email != true ||
-  //   validationStatus.password != true
-  // ) {
-  //   console.log("form can not be submitted");
-  // } else {
-  submitCall();
+  if (
+    validationStatus.name != true ||
+    validationStatus.user != true ||
+    validationStatus.phone != true ||
+    validationStatus.email != true ||
+    validationStatus.password != true
+  ) {
+    console.log("form can not be submitted");
+  } else {
+    submitCall();
 
-  Dform.reset();
+    Dform.reset();
+  }
   small.forEach((error) => {
     error.innerHTML = "";
   });
